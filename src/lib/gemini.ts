@@ -3,7 +3,7 @@
  * env var change rather than a redeploy of code, and failures surface the real
  * API message instead of being swallowed — a wrong model id should be obvious.
  */
-const DEFAULT_MODEL = "gemini-2.5-flash";
+const DEFAULT_MODEL = "gemini-3.6-flash";
 
 export function hasGeminiKey() {
   return Boolean(process.env.GEMINI_API_KEY);
@@ -31,7 +31,10 @@ export async function generateJson(prompt: string): Promise<GeminiResult> {
         contents: [{ role: "user", parts: [{ text: prompt }] }],
         generationConfig: {
           temperature: 0.2,
-          maxOutputTokens: 900,
+          // Generous headroom: the 3.x models reason by default and those
+          // tokens draw from the same budget, so a tight cap gets spent on
+          // thinking and returns an empty candidate.
+          maxOutputTokens: 2048,
           responseMimeType: "application/json",
         },
       }),
@@ -44,10 +47,23 @@ export async function generateJson(prompt: string): Promise<GeminiResult> {
     }
 
     const json = (await res.json()) as {
-      candidates?: { content?: { parts?: { text?: string }[] } }[];
+      candidates?: {
+        content?: { parts?: { text?: string }[] };
+        finishReason?: string;
+      }[];
+      promptFeedback?: { blockReason?: string };
     };
-    const text = json.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!text) return { ok: false, error: "Gemini returned no content" };
+
+    const candidate = json.candidates?.[0];
+    const text = candidate?.content?.parts?.map((p) => p.text ?? "").join("") || "";
+
+    if (!text) {
+      // Name the reason — an empty candidate is usually MAX_TOKENS (budget
+      // spent on reasoning) or a safety block, and those need different fixes.
+      const reason =
+        json.promptFeedback?.blockReason ?? candidate?.finishReason ?? "unknown";
+      return { ok: false, error: `Gemini returned no content (${reason})` };
+    }
 
     return { ok: true, text };
   } catch (err) {

@@ -47,6 +47,7 @@ recalling anything from training, and it is generated at most once per calendar
 day and cached.
 
 Set `GEMINI_API_KEY` (from [Google AI Studio](https://aistudio.google.com/apikey)).
+Default model is `gemini-3.6-flash`.
 Gemini model ids change often; if the default is retired, set `GEMINI_MODEL`
 rather than editing code — the panel surfaces the API's own error message so a
 bad model id is immediately obvious.
