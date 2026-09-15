@@ -1,7 +1,7 @@
 const BASE = "https://finnhub.io/api/v1";
 
 export const QUOTE_REVALIDATE = 45;
-export const CANDLE_REVALIDATE = 300;
+export const NEWS_REVALIDATE = 300;
 export const PROFILE_REVALIDATE = 86400;
 
 export function hasFinnhubKey() {
@@ -40,16 +40,6 @@ export type FinnhubQuote = {
   t: number;
 };
 
-export type FinnhubCandle = {
-  c: number[];
-  h: number[];
-  l: number[];
-  o: number[];
-  s: string;
-  t: number[];
-  v: number[];
-};
-
 export type FinnhubProfile = {
   name?: string;
   marketCapitalization?: number; // in millions
@@ -65,26 +55,32 @@ export function getQuotes(symbols: string[]) {
   return Promise.all(symbols.map((s) => getQuote(s).then((q) => [s, q] as const)));
 }
 
-export function getDailyCandle(symbol: string, days: number) {
-  const to = Math.floor(Date.now() / 1000);
-  const from = to - days * 24 * 60 * 60;
-  return finnhubGet<FinnhubCandle>(
-    "/stock/candle",
-    { symbol, resolution: "D", from, to },
-    CANDLE_REVALIDATE
-  );
-}
-
-export function getMonthlyCandle(symbol: string, months: number) {
-  const to = Math.floor(Date.now() / 1000);
-  const from = to - months * 31 * 24 * 60 * 60;
-  return finnhubGet<FinnhubCandle>(
-    "/stock/candle",
-    { symbol, resolution: "M", from, to },
-    CANDLE_REVALIDATE
-  );
-}
-
 export function getProfile(symbol: string) {
   return finnhubGet<FinnhubProfile>("/stock/profile2", { symbol }, PROFILE_REVALIDATE);
+}
+
+export type FinnhubNews = {
+  id?: number;
+  category?: string;
+  datetime?: number;
+  headline?: string;
+  image?: string;
+  related?: string;
+  source?: string;
+  summary?: string;
+  url?: string;
+};
+
+export function getMarketNews() {
+  return finnhubGet<FinnhubNews[]>("/news", { category: "general" }, NEWS_REVALIDATE);
+}
+
+export function getCompanyNews(symbol: string) {
+  const day = 24 * 60 * 60 * 1000;
+  const iso = (d: number) => new Date(d).toISOString().slice(0, 10);
+  return finnhubGet<FinnhubNews[]>(
+    "/company-news",
+    { symbol, from: iso(Date.now() - 14 * day), to: iso(Date.now()) },
+    NEWS_REVALIDATE
+  );
 }

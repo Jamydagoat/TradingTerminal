@@ -29,7 +29,7 @@ export const MEGACAPS = [
   { symbol: "AVGO", name: "Broadcom Inc.", sector: "Technology" },
 ] as const;
 
-export const VOLUME_WATCHLIST = [
+export const MOVERS_WATCHLIST = [
   "NVDA",
   "AAPL",
   "TSLA",

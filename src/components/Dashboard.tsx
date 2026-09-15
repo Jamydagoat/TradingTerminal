@@ -2,27 +2,26 @@
 
 import { useLiveData } from "@/hooks/useLiveData";
 import { TickersWidget } from "./TickersWidget";
-import { VolumeTable } from "./VolumeTable";
+import { MoversTable } from "./MoversTable";
 import { FearGreedGauge } from "./FearGreedGauge";
 import { SectorPerformance } from "./SectorPerformance";
 import { MarketSnapshot } from "./MarketSnapshot";
 import { MarketCapTable } from "./MarketCapTable";
-import { PerformanceChart } from "./PerformanceChart";
+import { RelativePerformance } from "./RelativePerformance";
 import { EconomicCalendarWidget } from "./EconomicCalendarWidget";
 import { StockHeatmapWidget } from "./StockHeatmapWidget";
-import { TopStoriesWidget } from "./TopStoriesWidget";
+import { NewsFeed } from "./NewsFeed";
 import {
-  biggestVolume as mockVolume,
+  biggestMovers as mockMovers,
   sectorPerformance as mockSectors,
   marketSnapshot,
   marketCap as mockMarketCap,
-  performanceSeries as mockPerformance,
   fearGreed as mockFearGreed,
 } from "@/lib/mockData";
-import type { Quote, SectorData, MarketCapRow, PerformanceSeries } from "@/lib/types";
+import type { Quote, SectorData, MarketCapRow } from "@/lib/types";
 
 export function Dashboard() {
-  const volume = useLiveData<Quote[]>("/api/volume", mockVolume, 45000);
+  const movers = useLiveData<Quote[]>("/api/movers", mockMovers, 45000);
   const feargreed = useLiveData<typeof mockFearGreed & { estimated?: boolean }>(
     "/api/feargreed",
     mockFearGreed,
@@ -30,14 +29,13 @@ export function Dashboard() {
   );
   const sectors = useLiveData<SectorData[]>("/api/sectors", mockSectors, 45000);
   const marketCap = useLiveData<MarketCapRow[]>("/api/marketcap", mockMarketCap, 300000);
-  const performance = useLiveData<PerformanceSeries[]>("/api/performance", mockPerformance, 300000);
 
   return (
     <main className="w-full flex-1 py-3 space-y-3">
       <TickersWidget />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 items-stretch">
-        <VolumeTable data={volume.data} live={volume.live} />
+        <MoversTable data={movers.data} live={movers.live} />
         <FearGreedGauge
           score={feargreed.data.score}
           lastUpdated={feargreed.data.lastUpdated}
@@ -49,12 +47,12 @@ export function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 items-stretch">
         <MarketSnapshot data={marketSnapshot} />
         <MarketCapTable data={marketCap.data} live={marketCap.live} />
-        <PerformanceChart series={performance.data} live={performance.live} />
+        <RelativePerformance />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 items-stretch">
         <EconomicCalendarWidget />
-        <TopStoriesWidget />
+        <NewsFeed />
       </div>
 
       <StockHeatmapWidget />

@@ -31,17 +31,23 @@ cp .env.local.example .env.local
 npm run dev
 ```
 
-**Live via Finnhub:** sector performance, market cap leaders, most active,
-and the relative performance chart.
+**Live via Finnhub (free key):** sector performance (1D), biggest movers,
+market cap leaders, and market/company news with source attribution.
 
 **Live via TradingView embeds (no key needed):** ticker tape, index tickers,
-economic calendar, top stories, heatmap, and everything on the security
-detail view.
+relative performance comparison chart, economic calendar, heatmap, and the
+chart / technical analysis / profile / fundamentals on the detail view.
 
-**Not live (no reliable free source, stays Sample):**
-- Fear & Greed score is a computed proxy (market breadth + VIXY momentum)
-  since CNN's index has no public API.
-- Market Snapshot (international indices, yields) needs a paid Finnhub feed.
+**Known free-tier limits:**
+- Finnhub's `/stock/candle` endpoint is premium-only (403 on free keys), so
+  there is no historical OHLC or volume. "Biggest Movers" is therefore ranked
+  by absolute daily move rather than volume, and the relative performance
+  chart is a TradingView comparison rather than a locally drawn series.
+- Fear & Greed is a computed proxy (market breadth + VIXY momentum); CNN's
+  index has no public API.
+- Market Snapshot (international indices, yields) stays sample data.
+- The economic calendar is a cross-origin iframe, so its Actual/Forecast/Prior
+  labels are an approximate strip rendered above the widget.
 
 ## Development
 

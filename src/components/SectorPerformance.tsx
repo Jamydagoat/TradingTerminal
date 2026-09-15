@@ -12,7 +12,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import type { SectorData } from "@/lib/types";
-import { Panel, StatusTag } from "./Panel";
+import { Panel, StatusTag, RangeTag } from "./Panel";
 
 const ICONS: Record<string, LucideIcon> = {
   zap: Zap,
@@ -30,7 +30,15 @@ const ICONS: Record<string, LucideIcon> = {
 export function SectorPerformance({ data, live }: { data: SectorData[]; live: boolean }) {
   const max = Math.max(...data.map((d) => Math.abs(d.changePercent)), 1);
   return (
-    <Panel title="Sector Performance" right={<StatusTag live={live} />}>
+    <Panel
+      title="Sector Performance"
+      right={
+        <span className="flex items-center gap-2">
+          <StatusTag live={live} />
+          <RangeTag label="1D" />
+        </span>
+      }
+    >
       <div className="px-3 tabular">
         {data.map((s) => {
           const up = s.changePercent >= 0;

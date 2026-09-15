@@ -1,11 +1,19 @@
 import Link from "next/link";
 import type { Quote } from "@/lib/types";
-import { Panel, ChangeText, StatusTag } from "./Panel";
+import { Panel, ChangeText, StatusTag, RangeTag } from "./Panel";
 import { Avatar } from "./Avatar";
 
-export function VolumeTable({ data, live }: { data: Quote[]; live: boolean }) {
+export function MoversTable({ data, live }: { data: Quote[]; live: boolean }) {
   return (
-    <Panel title="Most Active" right={<StatusTag live={live} />}>
+    <Panel
+      title="Biggest Movers"
+      right={
+        <span className="flex items-center gap-2">
+          <StatusTag live={live} />
+          <RangeTag label="1D" />
+        </span>
+      }
+    >
       <div className="overflow-x-auto">
         <table className="w-full text-[13px]">
           <thead>

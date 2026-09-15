@@ -4,7 +4,6 @@ export type Quote = {
   price: number;
   change: number;
   changePercent: number;
-  volume?: number;
   logo?: string;
 };
 
@@ -22,17 +21,19 @@ export type MarketCapRow = {
   logo?: string;
 };
 
+export type NewsItem = {
+  id: string;
+  headline: string;
+  url: string;
+  source: string;
+  datetime: number;
+  related: string;
+};
+
 export type SnapshotRow = {
   symbol: string;
   name: string;
   flag: string;
   changePercent: number;
   value: string;
-};
-
-export type PerformanceSeries = {
-  symbol: string;
-  color: string;
-  totalReturnPercent: number;
-  points: { date: string; value: number }[];
 };

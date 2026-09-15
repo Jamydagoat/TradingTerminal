@@ -1,12 +1,6 @@
-import type {
-  SectorData,
-  MarketCapRow,
-  SnapshotRow,
-  PerformanceSeries,
-  Quote,
-} from "./types";
+import type { SectorData, MarketCapRow, SnapshotRow, NewsItem, Quote } from "./types";
 
-export const biggestVolume: Quote[] = [
+export const biggestMovers: Quote[] = [
   { symbol: "NOK", name: "Nokia Corporation", price: 10.1, change: -1.04, changePercent: -9.34 },
   { symbol: "NVDA", name: "Nvidia Corp", price: 213.15, change: -5.04, changePercent: -2.31 },
   { symbol: "CRBP", name: "Corbus Pharmaceuticals", price: 9.14, change: 1.01, changePercent: 12.42 },
@@ -48,28 +42,35 @@ export const marketCap: MarketCapRow[] = [
   { symbol: "AVGO", name: "Broadcom Inc.", marketCapTrillions: 1.722, price: 350.03 },
 ];
 
-function buildSeries(symbol: string, color: string, total: number): PerformanceSeries {
-  const points: { date: string; value: number }[] = [];
-  let v = 0;
-  const months = ["Sep 25", "Oct", "Nov", "Dec", "Jan 26", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep 26"];
-  for (let i = 0; i < months.length; i++) {
-    const t = i / (months.length - 1);
-    v = total * t + Math.sin(i * 1.3) * (total * 0.25);
-    points.push({ date: months[i], value: Number(v.toFixed(2)) });
-  }
-  points[points.length - 1].value = total;
-  return { symbol, color, totalReturnPercent: total, points };
-}
-
-export const performanceSeries: PerformanceSeries[] = [
-  buildSeries("QQQ", "#6b8cc4", 22.39),
-  buildSeries("IWM", "#c08f4a", 19.97),
-  buildSeries("SPY", "#b3645e", 16.22),
-  buildSeries("DIA", "#4f9166", 13.83),
-];
-
 export const fearGreed = {
   score: 33,
   label: "Fear",
   lastUpdated: "Sep 14, 7:25 AM ET",
 };
+
+export const marketNews: NewsItem[] = [
+  {
+    id: "sample-1",
+    headline: "Futures steady as investors weigh rate path ahead of inflation print",
+    url: "https://finnhub.io/",
+    source: "Reuters",
+    datetime: 0,
+    related: "",
+  },
+  {
+    id: "sample-2",
+    headline: "Chip stocks lead premarket declines after cautious sector guidance",
+    url: "https://finnhub.io/",
+    source: "CNBC",
+    datetime: 0,
+    related: "",
+  },
+  {
+    id: "sample-3",
+    headline: "Treasury yields edge higher as traders trim rate-cut expectations",
+    url: "https://finnhub.io/",
+    source: "MarketWatch",
+    datetime: 0,
+    related: "",
+  },
+];
