@@ -1,48 +1,62 @@
-import type { SnapshotRow } from "@/lib/types";
-import { Panel, ChangeText, StatusTag } from "./Panel";
+"use client";
 
-const FLAG: Record<string, string> = {
-  us: "US",
-  jp: "JP",
-  gb: "GB",
-  ca: "CA",
-};
+import { Panel, StatusTag } from "./Panel";
+import { TradingViewWidget } from "./TradingViewWidget";
 
-export function MarketSnapshot({ data }: { data: SnapshotRow[] }) {
+/**
+ * Finnhub's free tier covers US stocks and ETFs only — no yields, no
+ * volatility indices, no international benchmarks. This widget carries the
+ * real values instead of ETF proxies that would only approximate them.
+ * Exchange data here is delayed; forex is real-time.
+ */
+const SYMBOL_GROUPS = [
+  {
+    name: "Volatility & Rates",
+    originalName: "Volatility & Rates",
+    symbols: [
+      { name: "CBOE:VIX", displayName: "VIX" },
+      { name: "TVC:US10Y", displayName: "US 10Y" },
+      { name: "TVC:US02Y", displayName: "US 2Y" },
+      { name: "TVC:DXY", displayName: "Dollar Index" },
+    ],
+  },
+  {
+    name: "Global Indices",
+    originalName: "Global Indices",
+    symbols: [
+      { name: "TVC:NI225", displayName: "Nikkei 225" },
+      { name: "TVC:UKX", displayName: "FTSE 100" },
+      { name: "TVC:DAX", displayName: "DAX" },
+      { name: "TVC:HSI", displayName: "Hang Seng" },
+    ],
+  },
+  {
+    name: "Commodities",
+    originalName: "Commodities",
+    symbols: [
+      { name: "TVC:GOLD", displayName: "Gold" },
+      { name: "TVC:USOIL", displayName: "Crude Oil" },
+    ],
+  },
+];
+
+export function MarketSnapshot() {
   return (
-    <Panel title="Market Snapshot" right={<StatusTag live={false} />}>
-      <div className="overflow-x-auto">
-        <table className="w-full text-[13px]">
-          <thead>
-            <tr className="text-left text-[10px] uppercase tracking-[0.08em] text-faint">
-              <th className="px-3 py-1.5 font-medium">Instrument</th>
-              <th className="px-3 py-1.5 font-medium text-right">Change</th>
-              <th className="px-3 py-1.5 font-medium text-right">Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((row) => (
-              <tr key={row.symbol} className="border-t border-border hover:bg-surface-2">
-                <td className="px-3 py-2">
-                  <div className="flex items-center gap-2">
-                    <span className="rounded-sm border border-border px-1 py-0.5 text-[9px] font-semibold tracking-wide text-faint">
-                      {FLAG[row.flag] ?? "--"}
-                    </span>
-                    <div className="min-w-0">
-                      <div className="font-medium">{row.symbol}</div>
-                      <div className="text-[11px] text-muted truncate">{row.name}</div>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-3 py-2 text-right font-medium">
-                  <ChangeText value={row.changePercent} />
-                </td>
-                <td className="px-3 py-2 text-right font-medium">{row.value}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <Panel title="Market Snapshot" right={<StatusTag live />}>
+      <TradingViewWidget
+        scriptSrc="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js"
+        config={{
+          symbolsGroups: SYMBOL_GROUPS,
+          showSymbolLogo: true,
+          isTransparent: true,
+          colorTheme: "dark",
+          locale: "en",
+          backgroundColor: "rgba(20, 20, 22, 1)",
+        }}
+        height={332}
+        interactive={false}
+        fallbackLabel="market snapshot"
+      />
     </Panel>
   );
 }

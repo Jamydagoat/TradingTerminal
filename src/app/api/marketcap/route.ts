@@ -15,13 +15,18 @@ export async function GET() {
     const results = await Promise.all(
       MEGACAPS.map(async ({ symbol, name }) => {
         const [quote, profile] = await Promise.all([getQuote(symbol), getProfile(symbol)]);
-        if (!quote || !profile?.marketCapitalization) return null;
+        // The quote carries the price and is what makes the row live. Market
+        // cap comes from profile2 and is treated as optional — previously a
+        // missing cap dropped the whole row, so one thin profile response
+        // could silently demote the entire panel to sample data.
+        if (!quote || typeof quote.c !== "number") return null;
+        const cap = profile?.marketCapitalization;
         const row: MarketCapRow = {
           symbol,
-          name: profile.name || name,
-          marketCapTrillions: profile.marketCapitalization / 1_000_000,
+          name: profile?.name || name,
+          marketCapTrillions: typeof cap === "number" && cap > 0 ? cap / 1_000_000 : 0,
           price: quote.c,
-          logo: profile.logo,
+          logo: profile?.logo,
         };
         return row;
       })

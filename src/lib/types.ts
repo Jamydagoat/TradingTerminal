@@ -35,11 +35,3 @@ export type Rundown = {
   watchlist: { symbol: string; catalyst: string }[];
   generatedAt: number;
 };
-
-export type SnapshotRow = {
-  symbol: string;
-  name: string;
-  flag: string;
-  changePercent: number;
-  value: string;
-};

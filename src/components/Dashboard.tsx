@@ -16,7 +16,6 @@ import { LiveFeed } from "./LiveFeed";
 import {
   biggestMovers as mockMovers,
   sectorPerformance as mockSectors,
-  marketSnapshot,
   marketCap as mockMarketCap,
   fearGreed as mockFearGreed,
 } from "@/lib/mockData";
@@ -49,7 +48,7 @@ export function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 items-stretch">
-        <MarketSnapshot data={marketSnapshot} />
+        <MarketSnapshot />
         <MarketCapTable data={marketCap.data} live={marketCap.live} />
         <RelativePerformance />
       </div>

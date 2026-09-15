@@ -28,7 +28,11 @@ export function MarketCapTable({ data, live }: { data: MarketCapRow[]; live: boo
                   </Link>
                 </td>
                 <td className="px-3 py-2 text-right font-medium">
-                  {row.marketCapTrillions.toFixed(3)}T
+                  {row.marketCapTrillions > 0 ? (
+                    `${row.marketCapTrillions.toFixed(3)}T`
+                  ) : (
+                    <span className="text-faint">—</span>
+                  )}
                 </td>
                 <td className="px-3 py-2 text-right font-medium">${row.price.toFixed(2)}</td>
               </tr>

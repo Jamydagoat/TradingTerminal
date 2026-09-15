@@ -1,4 +1,4 @@
-import type { SectorData, MarketCapRow, SnapshotRow, NewsItem, Quote } from "./types";
+import type { SectorData, MarketCapRow, NewsItem, Quote } from "./types";
 
 export const biggestMovers: Quote[] = [
   { symbol: "NOK", name: "Nokia Corporation", price: 10.1, change: -1.04, changePercent: -9.34 },
@@ -22,15 +22,6 @@ export const sectorPerformance: SectorData[] = [
   { name: "Technology", icon: "monitor", changePercent: -2.0 },
 ];
 
-export const marketSnapshot: SnapshotRow[] = [
-  { symbol: "TNX", name: "10-Year Yield", flag: "us", changePercent: 0.61, value: "4.97%" },
-  { symbol: "VIX", name: "S&P 500 Volatility", flag: "us", changePercent: 10.48, value: "17.50" },
-  { symbol: "VXN", name: "Nasdaq 100 Volatility", flag: "us", changePercent: -9.9, value: "21.02" },
-  { symbol: "SKEW", name: "S&P 500 SKEW", flag: "us", changePercent: 5.08, value: "154.49" },
-  { symbol: "N225", name: "Nikkei 225", flag: "jp", changePercent: -0.81, value: "63,493" },
-  { symbol: "FTSE", name: "FTSE 100", flag: "gb", changePercent: 0.64, value: "10,718" },
-  { symbol: "GSPTSE", name: "S&P/TSX Composite", flag: "ca", changePercent: 0.54, value: "35,697" },
-];
 
 export const marketCap: MarketCapRow[] = [
   { symbol: "NVDA", name: "NVIDIA Corporation", marketCapTrillions: 5.287, price: 213.15 },
