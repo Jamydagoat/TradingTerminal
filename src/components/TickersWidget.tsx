@@ -1,6 +1,5 @@
 "use client";
 
-import { Panel } from "./Panel";
 import { TradingViewWidget } from "./TradingViewWidget";
 
 const SYMBOLS = [
@@ -12,7 +11,7 @@ const SYMBOLS = [
 
 export function TickersWidget() {
   return (
-    <Panel className="min-h-[110px]">
+    <div className="rounded-md border border-border bg-surface overflow-hidden">
       <TradingViewWidget
         scriptSrc="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js"
         config={{
@@ -22,10 +21,9 @@ export function TickersWidget() {
           showSymbolLogo: true,
           locale: "en",
         }}
-        containerClassName="h-full"
-        className="h-full"
+        height={128}
         fallbackLabel="index tickers"
       />
-    </Panel>
+    </div>
   );
 }

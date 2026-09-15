@@ -13,11 +13,13 @@ export function Panel({
 }) {
   return (
     <div
-      className={`h-full rounded-xl border border-border bg-surface flex flex-col overflow-hidden ${className}`}
+      className={`h-full rounded-md border border-border bg-surface flex flex-col overflow-hidden ${className}`}
     >
       {title && (
-        <div className="flex items-center justify-between px-4 py-3 border-b border-border shrink-0">
-          <h2 className="text-[15px] font-semibold text-foreground">{title}</h2>
+        <div className="flex items-center justify-between gap-2 px-3 h-9 border-b border-border shrink-0">
+          <h2 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
+            {title}
+          </h2>
           {right}
         </div>
       )}
@@ -26,15 +28,26 @@ export function Panel({
   );
 }
 
-export function ChangeBadge({ value }: { value: number }) {
-  const up = value >= 0;
+export function StatusTag({ live }: { live: boolean }) {
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-semibold ${
-        up ? "bg-up/15 text-up" : "bg-down/15 text-down"
-      }`}
+      className="inline-flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.08em] text-faint"
+      title={
+        live
+          ? "Live data"
+          : "Sample data — set FINNHUB_API_KEY to go live"
+      }
     >
-      {up ? "↗" : "↘"} {Math.abs(value).toFixed(2)}%
+      <span className={`h-1 w-1 rounded-full ${live ? "bg-up" : "bg-faint"}`} />
+      {live ? "Live" : "Sample"}
+    </span>
+  );
+}
+
+export function RangeTag({ label }: { label: string }) {
+  return (
+    <span className="rounded border border-border px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-[0.06em] text-faint">
+      {label}
     </span>
   );
 }

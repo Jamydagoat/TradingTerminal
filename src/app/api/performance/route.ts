@@ -6,10 +6,10 @@ import type { PerformanceSeries } from "@/lib/types";
 export const revalidate = 0;
 
 const COLORS: Record<string, string> = {
-  SPY: "#ef4444",
-  QQQ: "#3b82f6",
-  IWM: "#f59e0b",
-  DIA: "#10b981",
+  SPY: "#b3645e",
+  QQQ: "#6b8cc4",
+  IWM: "#c08f4a",
+  DIA: "#4f9166",
 };
 
 export async function GET() {

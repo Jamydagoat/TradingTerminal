@@ -12,7 +12,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import type { SectorData } from "@/lib/types";
-import { Panel } from "./Panel";
+import { Panel, StatusTag } from "./Panel";
 
 const ICONS: Record<string, LucideIcon> = {
   zap: Zap,
@@ -27,18 +27,11 @@ const ICONS: Record<string, LucideIcon> = {
   monitor: Monitor,
 };
 
-export function SectorPerformance({ data }: { data: SectorData[] }) {
+export function SectorPerformance({ data, live }: { data: SectorData[]; live: boolean }) {
   const max = Math.max(...data.map((d) => Math.abs(d.changePercent)), 1);
   return (
-    <Panel
-      title="Sector Performance"
-      right={
-        <span className="rounded-md border border-border px-2 py-1 text-xs text-muted">
-          1D
-        </span>
-      }
-    >
-      <div className="px-4 py-2">
+    <Panel title="Sector Performance" right={<StatusTag live={live} />}>
+      <div className="px-3 tabular">
         {data.map((s) => {
           const up = s.changePercent >= 0;
           const width = (Math.abs(s.changePercent) / max) * 100;
@@ -46,18 +39,18 @@ export function SectorPerformance({ data }: { data: SectorData[] }) {
           return (
             <div
               key={s.name}
-              className="flex items-center justify-between gap-3 py-2.5 border-b border-border last:border-0 text-sm"
+              className="flex items-center justify-between gap-3 py-2 border-b border-border last:border-0 text-[13px]"
             >
-              <span className="flex items-center gap-2.5 text-foreground/90 truncate">
-                <Icon className="h-4 w-4 shrink-0 text-muted" strokeWidth={2} />
+              <span className="flex items-center gap-2 text-foreground/90 truncate">
+                <Icon className="h-3.5 w-3.5 shrink-0 text-faint" strokeWidth={2} />
                 {s.name}
               </span>
               <span className="flex items-center gap-2 shrink-0">
-                <span className={`font-semibold ${up ? "text-up" : "text-down"}`}>
+                <span className={`font-medium ${up ? "text-up" : "text-down"}`}>
                   {up ? "+" : ""}
                   {s.changePercent.toFixed(2)}%
                 </span>
-                <span className="h-1.5 w-20 rounded-full bg-surface-2 overflow-hidden">
+                <span className="h-[3px] w-16 rounded-full bg-surface-2 overflow-hidden">
                   <span
                     className={`block h-full rounded-full ${up ? "bg-up" : "bg-down"}`}
                     style={{ width: `${width}%` }}

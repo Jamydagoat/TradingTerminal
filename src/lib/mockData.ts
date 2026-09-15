@@ -62,10 +62,10 @@ function buildSeries(symbol: string, color: string, total: number): PerformanceS
 }
 
 export const performanceSeries: PerformanceSeries[] = [
-  buildSeries("QQQ", "#3b82f6", 22.39),
-  buildSeries("IWM", "#f59e0b", 19.97),
-  buildSeries("SPY", "#ef4444", 16.22),
-  buildSeries("DIA", "#10b981", 13.83),
+  buildSeries("QQQ", "#6b8cc4", 22.39),
+  buildSeries("IWM", "#c08f4a", 19.97),
+  buildSeries("SPY", "#b3645e", 16.22),
+  buildSeries("DIA", "#4f9166", 13.83),
 ];
 
 export const fearGreed = {

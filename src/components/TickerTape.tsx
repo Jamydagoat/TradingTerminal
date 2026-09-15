@@ -16,7 +16,7 @@ const SYMBOLS = [
 
 export function TickerTape() {
   return (
-    <div className="border-b border-border bg-surface min-h-[46px]">
+    <div className="border-b border-border bg-surface">
       <TradingViewWidget
         scriptSrc="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js"
         config={{
@@ -27,6 +27,7 @@ export function TickerTape() {
           colorTheme: "dark",
           locale: "en",
         }}
+        height={46}
         fallbackLabel="ticker tape"
       />
     </div>

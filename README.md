@@ -1,15 +1,20 @@
 # Trading Terminal
 
-A markets dashboard inspired by tradingterminal.com — index cards, biggest
-pre-market movers, a Fear & Greed gauge, sector performance, market cap
-leaders, a normalized 1Y performance chart, an economic calendar, and a
-sector heatmap.
+A markets dashboard: index tickers, most-active names, a Fear & Greed gauge,
+sector performance, market cap leaders, a relative performance chart, an
+economic calendar, market news, and an S&P 500 heatmap.
+
+Clicking any ticker in the Most Active or Market Cap tables opens a security
+detail view at `/stock/<SYMBOL>` — chart, technical analysis gauge, company
+profile, fundamentals, and symbol news, with a back arrow and a Trade button
+(currently a no-op placeholder).
 
 ## Stack
 
 - Next.js (App Router) + TypeScript
 - Tailwind CSS v4
-- Recharts
+- Recharts, lucide-react
+- TradingView embed widgets (free, no API key)
 
 ## Live data
 
@@ -26,15 +31,17 @@ cp .env.local.example .env.local
 npm run dev
 ```
 
-**Live via Finnhub:** index cards, sector performance, market cap table,
-heatmap, biggest-volume table, and the normalized performance chart.
+**Live via Finnhub:** sector performance, market cap leaders, most active,
+and the relative performance chart.
+
+**Live via TradingView embeds (no key needed):** ticker tape, index tickers,
+economic calendar, top stories, heatmap, and everything on the security
+detail view.
 
 **Not live (no reliable free source, stays Sample):**
-- Fear & Greed Index score is a computed proxy (market breadth + VIXY
-  momentum) since CNN's index has no public API.
-- Market Snapshot (international indices, yields) and the Economic
-  Calendar need a paid data feed on Finnhub's side, so these stay as
-  sample data.
+- Fear & Greed score is a computed proxy (market breadth + VIXY momentum)
+  since CNN's index has no public API.
+- Market Snapshot (international indices, yields) needs a paid Finnhub feed.
 
 ## Development
 

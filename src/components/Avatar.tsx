@@ -8,13 +8,13 @@ function colorForSymbol(symbol: string): string {
     hash = symbol.charCodeAt(i) + ((hash << 5) - hash);
   }
   const hue = Math.abs(hash) % 360;
-  return `hsl(${hue}, 55%, 30%)`;
+  return `hsl(${hue}, 18%, 26%)`;
 }
 
 export function Avatar({
   symbol,
   logo,
-  className = "h-7 w-7",
+  className = "h-6 w-6",
 }: {
   symbol: string;
   logo?: string;
