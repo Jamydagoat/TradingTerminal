@@ -69,6 +69,17 @@ cp .dev.vars.example .dev.vars  # add your key here for local preview
 npm run cf:preview
 ```
 
-The worker name in `wrangler.jsonc` (`trading-terminal`) determines your URL:
-`https://trading-terminal.<your-subdomain>.workers.dev`. First deploy will prompt you to
+The worker name in `wrangler.jsonc` (`tradingterminal`) determines your URL:
+`https://tradingterminal.<your-subdomain>.workers.dev`. First deploy will prompt you to
 claim a `workers.dev` subdomain if your account doesn't have one yet.
+
+### Deploying via Cloudflare's git integration (Workers Builds)
+
+If you connected the GitHub repo directly in the Cloudflare dashboard instead of using
+the CLI, set:
+- **Build command:** `npm run cf:build` (not `npm run build` — that skips the OpenNext
+  bundling step and `wrangler deploy` will fail with a missing `.open-next/worker.js`)
+- **Deploy command:** `npx wrangler deploy`
+
+Add `FINNHUB_API_KEY` under the project's environment variables/secrets in the dashboard
+to enable live data.
