@@ -8,7 +8,7 @@ import { SectorPerformance } from "./SectorPerformance";
 import { MarketSnapshot } from "./MarketSnapshot";
 import { MarketCapTable } from "./MarketCapTable";
 import { PerformanceChart } from "./PerformanceChart";
-import { EconomicCalendar } from "./EconomicCalendar";
+import { EconomicCalendarWidget } from "./EconomicCalendarWidget";
 import { Heatmap } from "./Heatmap";
 import {
   indexCards as mockIndexCards,
@@ -17,7 +17,6 @@ import {
   marketSnapshot,
   marketCap as mockMarketCap,
   performanceSeries as mockPerformance,
-  economicCalendar,
   heatmap as mockHeatmap,
   fearGreed as mockFearGreed,
 } from "@/lib/mockData";
@@ -102,12 +101,7 @@ export function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
-        <div className="relative h-full">
-          <EconomicCalendar data={economicCalendar} />
-          <div className="absolute right-16 top-3.5">
-            <LiveDot live={false} />
-          </div>
-        </div>
+        <EconomicCalendarWidget />
         <div className="relative h-full">
           <Heatmap data={heatmap.data} />
           <div className="absolute right-16 top-3.5">

@@ -35,14 +35,6 @@ export type SnapshotRow = {
   value: string;
 };
 
-export type CalendarEvent = {
-  time: string;
-  event: string;
-  est: string;
-  actual: string;
-  impact: 1 | 2 | 3;
-};
-
 export type HeatmapTile = {
   symbol: string;
   name: string;

@@ -3,7 +3,6 @@ import type {
   SectorData,
   MarketCapRow,
   SnapshotRow,
-  CalendarEvent,
   HeatmapTile,
   PerformanceSeries,
   Quote,
@@ -106,11 +105,6 @@ export const marketCap: MarketCapRow[] = [
   { symbol: "AMZN", name: "Amazon.com, Inc.", marketCapTrillions: 2.762, price: 254.95 },
   { symbol: "SPCX", name: "Space Exploration", marketCapTrillions: 1.977, price: 148.06 },
   { symbol: "AVGO", name: "Broadcom Inc.", marketCapTrillions: 1.722, price: 350.03 },
-];
-
-export const economicCalendar: CalendarEvent[] = [
-  { time: "11:30 AM ET", event: "6-Month Bill Auction", est: "-", actual: "-", impact: 2 },
-  { time: "11:30 AM ET", event: "3-Month Bill Auction", est: "3.81%", actual: "-", impact: 2 },
 ];
 
 export const heatmap: HeatmapTile[] = [
