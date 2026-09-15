@@ -7,13 +7,6 @@ export type Quote = {
   volume?: number;
 };
 
-export type IndexCardData = Quote & {
-  marketClosedPrice: number;
-  preMarketPrice: number;
-  preMarketChangePercent: number;
-  sparkline: number[];
-};
-
 export type SectorData = {
   name: string;
   icon: string;
@@ -33,13 +26,6 @@ export type SnapshotRow = {
   flag: string;
   changePercent: number;
   value: string;
-};
-
-export type HeatmapTile = {
-  symbol: string;
-  name: string;
-  changePercent: number;
-  sector: string;
 };
 
 export type PerformanceSeries = {

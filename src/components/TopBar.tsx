@@ -28,7 +28,7 @@ export function TopBar() {
 
   return (
     <header className="sticky top-0 z-20 border-b border-border bg-background/95 backdrop-blur">
-      <div className="mx-auto max-w-[1600px] flex items-center gap-4 px-4 py-3">
+      <div className="w-full flex items-center gap-4 px-0 py-3">
         <div className="flex items-center gap-2 shrink-0">
           <div className="h-8 w-8 rounded-md bg-brand flex items-center justify-center text-white font-bold text-sm">
             TT

@@ -1,7 +1,7 @@
 "use client";
 
 import { useLiveData } from "@/hooks/useLiveData";
-import { IndexCards } from "./IndexCards";
+import { TickersWidget } from "./TickersWidget";
 import { VolumeTable } from "./VolumeTable";
 import { FearGreedGauge } from "./FearGreedGauge";
 import { SectorPerformance } from "./SectorPerformance";
@@ -9,25 +9,17 @@ import { MarketSnapshot } from "./MarketSnapshot";
 import { MarketCapTable } from "./MarketCapTable";
 import { PerformanceChart } from "./PerformanceChart";
 import { EconomicCalendarWidget } from "./EconomicCalendarWidget";
-import { Heatmap } from "./Heatmap";
+import { StockHeatmapWidget } from "./StockHeatmapWidget";
+import { TopStoriesWidget } from "./TopStoriesWidget";
 import {
-  indexCards as mockIndexCards,
   biggestVolume as mockVolume,
   sectorPerformance as mockSectors,
   marketSnapshot,
   marketCap as mockMarketCap,
   performanceSeries as mockPerformance,
-  heatmap as mockHeatmap,
   fearGreed as mockFearGreed,
 } from "@/lib/mockData";
-import type {
-  IndexCardData,
-  Quote,
-  SectorData,
-  MarketCapRow,
-  PerformanceSeries,
-  HeatmapTile,
-} from "@/lib/types";
+import type { Quote, SectorData, MarketCapRow, PerformanceSeries } from "@/lib/types";
 
 function LiveDot({ live }: { live: boolean }) {
   return (
@@ -42,7 +34,6 @@ function LiveDot({ live }: { live: boolean }) {
 }
 
 export function Dashboard() {
-  const indices = useLiveData<IndexCardData[]>("/api/indices", mockIndexCards, 45000);
   const volume = useLiveData<Quote[]>("/api/volume", mockVolume, 45000);
   const feargreed = useLiveData<typeof mockFearGreed & { estimated?: boolean }>(
     "/api/feargreed",
@@ -52,11 +43,10 @@ export function Dashboard() {
   const sectors = useLiveData<SectorData[]>("/api/sectors", mockSectors, 45000);
   const marketCap = useLiveData<MarketCapRow[]>("/api/marketcap", mockMarketCap, 300000);
   const performance = useLiveData<PerformanceSeries[]>("/api/performance", mockPerformance, 300000);
-  const heatmap = useLiveData<HeatmapTile[]>("/api/heatmap", mockHeatmap, 45000);
 
   return (
-    <main className="mx-auto w-full max-w-[1600px] flex-1 px-4 py-4 space-y-4">
-      <IndexCards data={indices.data} />
+    <main className="w-full flex-1 px-0 py-4 space-y-4">
+      <TickersWidget />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch">
         <div className="relative h-full">
@@ -100,14 +90,10 @@ export function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch">
         <EconomicCalendarWidget />
-        <div className="relative h-full">
-          <Heatmap data={heatmap.data} />
-          <div className="absolute right-16 top-3.5">
-            <LiveDot live={heatmap.live} />
-          </div>
-        </div>
+        <StockHeatmapWidget />
+        <TopStoriesWidget />
       </div>
     </main>
   );

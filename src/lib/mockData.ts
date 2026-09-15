@@ -1,69 +1,10 @@
 import type {
-  IndexCardData,
   SectorData,
   MarketCapRow,
   SnapshotRow,
-  HeatmapTile,
   PerformanceSeries,
   Quote,
 } from "./types";
-
-function spark(seed: number, points = 24, drift = -1): number[] {
-  const out: number[] = [];
-  let v = 100;
-  for (let i = 0; i < points; i++) {
-    v += Math.sin(i * 0.7 + seed) * 2 + drift * 0.3 + (Math.random() - 0.5);
-    out.push(v);
-  }
-  return out;
-}
-
-export const indexCards: IndexCardData[] = [
-  {
-    symbol: "SPY",
-    name: "S&P 500",
-    price: 759.68,
-    marketClosedPrice: 764.29,
-    preMarketPrice: 759.68,
-    change: -4.61,
-    changePercent: -0.6,
-    preMarketChangePercent: -0.6,
-    sparkline: spark(1),
-  },
-  {
-    symbol: "QQQ",
-    name: "Nasdaq",
-    price: 704.33,
-    marketClosedPrice: 714.88,
-    preMarketPrice: 704.33,
-    change: -10.55,
-    changePercent: -1.48,
-    preMarketChangePercent: -1.48,
-    sparkline: spark(2),
-  },
-  {
-    symbol: "IWM",
-    name: "Russell 2K",
-    price: 287.75,
-    marketClosedPrice: 288.89,
-    preMarketPrice: 287.75,
-    change: -1.14,
-    changePercent: -0.39,
-    preMarketChangePercent: -0.39,
-    sparkline: spark(3),
-  },
-  {
-    symbol: "DIA",
-    name: "Dow Jones",
-    price: 524.53,
-    marketClosedPrice: 525.79,
-    preMarketPrice: 524.53,
-    change: -1.26,
-    changePercent: -0.24,
-    preMarketChangePercent: -0.24,
-    sparkline: spark(4),
-  },
-];
 
 export const biggestVolume: Quote[] = [
   { symbol: "NOK", name: "Nokia Corporation", price: 10.1, change: -1.04, changePercent: -9.34 },
@@ -105,16 +46,6 @@ export const marketCap: MarketCapRow[] = [
   { symbol: "AMZN", name: "Amazon.com, Inc.", marketCapTrillions: 2.762, price: 254.95 },
   { symbol: "SPCX", name: "Space Exploration", marketCapTrillions: 1.977, price: 148.06 },
   { symbol: "AVGO", name: "Broadcom Inc.", marketCapTrillions: 1.722, price: 350.03 },
-];
-
-export const heatmap: HeatmapTile[] = [
-  { symbol: "NVDA", name: "NVIDIA", changePercent: -2.35, sector: "Technology" },
-  { symbol: "AAPL", name: "Apple", changePercent: 0.43, sector: "Technology" },
-  { symbol: "MSFT", name: "Microsoft", changePercent: 0.26, sector: "Technology" },
-  { symbol: "GOOGL", name: "Alphabet", changePercent: 1.62, sector: "Communication" },
-  { symbol: "META", name: "Meta", changePercent: 2.46, sector: "Communication" },
-  { symbol: "AMZN", name: "Amazon", changePercent: -0.69, sector: "Consumer Cyclical" },
-  { symbol: "TSLA", name: "Tesla", changePercent: -1.8, sector: "Consumer Cyclical" },
 ];
 
 function buildSeries(symbol: string, color: string, total: number): PerformanceSeries {
