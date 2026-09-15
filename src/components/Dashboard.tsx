@@ -11,6 +11,7 @@ import { RelativePerformance } from "./RelativePerformance";
 import { EconomicCalendarWidget } from "./EconomicCalendarWidget";
 import { StockHeatmapWidget } from "./StockHeatmapWidget";
 import { NewsFeed } from "./NewsFeed";
+import { LiveFeed } from "./LiveFeed";
 import {
   biggestMovers as mockMovers,
   sectorPerformance as mockSectors,
@@ -50,9 +51,12 @@ export function Dashboard() {
         <RelativePerformance />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 items-stretch">
-        <EconomicCalendarWidget />
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 items-stretch">
+        <div className="lg:col-span-2">
+          <EconomicCalendarWidget />
+        </div>
         <NewsFeed />
+        <LiveFeed />
       </div>
 
       <StockHeatmapWidget />

@@ -28,7 +28,8 @@ const ICONS: Record<string, LucideIcon> = {
 };
 
 export function SectorPerformance({ data, live }: { data: SectorData[]; live: boolean }) {
-  const max = Math.max(...data.map((d) => Math.abs(d.changePercent)), 1);
+  const max = Math.max(...data.map((d) => Math.abs(d.changePercent)), 0.5);
+
   return (
     <Panel
       title="Sector Performance"
@@ -39,31 +40,39 @@ export function SectorPerformance({ data, live }: { data: SectorData[]; live: bo
         </span>
       }
     >
-      <div className="px-3 tabular">
+      <div className="flex h-full flex-col px-3 tabular">
         {data.map((s) => {
           const up = s.changePercent >= 0;
-          const width = (Math.abs(s.changePercent) / max) * 100;
+          // Diverging from a shared centre line, so direction reads at a glance.
+          const width = (Math.abs(s.changePercent) / max) * 50;
           const Icon = ICONS[s.icon] ?? Zap;
           return (
             <div
               key={s.name}
-              className="flex items-center justify-between gap-3 py-2 border-b border-border last:border-0 text-[13px]"
+              className="flex flex-1 items-center gap-3 border-b border-border last:border-0 text-[13px]"
             >
-              <span className="flex items-center gap-2 text-foreground/90 truncate">
+              <span className="flex w-[42%] min-w-0 shrink-0 items-center gap-2 text-foreground/90">
                 <Icon className="h-3.5 w-3.5 shrink-0 text-faint" strokeWidth={2} />
-                {s.name}
+                <span className="truncate">{s.name}</span>
               </span>
-              <span className="flex items-center gap-2 shrink-0">
-                <span className={`font-medium ${up ? "text-up" : "text-down"}`}>
-                  {up ? "+" : ""}
-                  {s.changePercent.toFixed(2)}%
-                </span>
-                <span className="h-[3px] w-16 rounded-full bg-surface-2 overflow-hidden">
-                  <span
-                    className={`block h-full rounded-full ${up ? "bg-up" : "bg-down"}`}
-                    style={{ width: `${width}%` }}
-                  />
-                </span>
+
+              <span className="relative h-1.5 flex-1 rounded-sm bg-surface-2">
+                <span className="absolute inset-y-[-3px] left-1/2 w-px -translate-x-1/2 bg-border-strong" />
+                <span
+                  className={`absolute top-0 h-full rounded-sm ${up ? "bg-up" : "bg-down"}`}
+                  style={
+                    up
+                      ? { left: "50%", width: `${width}%` }
+                      : { right: "50%", width: `${width}%` }
+                  }
+                />
+              </span>
+
+              <span
+                className={`w-14 shrink-0 text-right font-medium ${up ? "text-up" : "text-down"}`}
+              >
+                {up ? "+" : ""}
+                {s.changePercent.toFixed(2)}%
               </span>
             </div>
           );
