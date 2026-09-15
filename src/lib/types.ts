@@ -30,6 +30,12 @@ export type NewsItem = {
   related: string;
 };
 
+export type Rundown = {
+  summary: string;
+  watchlist: { symbol: string; catalyst: string }[];
+  generatedAt: number;
+};
+
 export type SnapshotRow = {
   symbol: string;
   name: string;

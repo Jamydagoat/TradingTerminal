@@ -2,6 +2,7 @@
 
 import { useLiveData } from "@/hooks/useLiveData";
 import { TickersWidget } from "./TickersWidget";
+import { DailyRundown } from "./DailyRundown";
 import { MoversTable } from "./MoversTable";
 import { FearGreedGauge } from "./FearGreedGauge";
 import { SectorPerformance } from "./SectorPerformance";
@@ -34,6 +35,8 @@ export function Dashboard() {
   return (
     <main className="w-full flex-1 py-3 space-y-3">
       <TickersWidget />
+
+      <DailyRundown />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 items-stretch">
         <MoversTable data={movers.data} live={movers.live} />
