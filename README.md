@@ -44,3 +44,31 @@ npm run dev      # http://localhost:3000
 npm run build    # production build
 npm run lint
 ```
+
+## Deploy to Cloudflare Workers
+
+Deployed via [OpenNext's Cloudflare adapter](https://opennext.js.org/cloudflare), which is
+Cloudflare's current recommended way to run a full Next.js app (including these API routes)
+on Workers — you get a free `*.workers.dev` URL out of the box.
+
+```bash
+npx wrangler login              # one-time browser auth
+npm run cf:deploy               # builds + deploys
+```
+
+To enable live data in production, set the Finnhub key as a Worker secret (never commit it):
+
+```bash
+npx wrangler secret put FINNHUB_API_KEY
+```
+
+For local testing against the actual Workers runtime (as opposed to `next dev`):
+
+```bash
+cp .dev.vars.example .dev.vars  # add your key here for local preview
+npm run cf:preview
+```
+
+The worker name in `wrangler.jsonc` (`trading-terminal`) determines your URL:
+`https://trading-terminal.<your-subdomain>.workers.dev`. First deploy will prompt you to
+claim a `workers.dev` subdomain if your account doesn't have one yet.
