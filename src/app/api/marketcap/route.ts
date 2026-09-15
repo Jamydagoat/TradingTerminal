@@ -21,6 +21,7 @@ export async function GET() {
           name: profile.name || name,
           marketCapTrillions: profile.marketCapitalization / 1_000_000,
           price: quote.c,
+          logo: profile.logo,
         };
         return row;
       })

@@ -16,7 +16,7 @@ export function StockHeatmapWidget() {
           <span className="text-up">Live</span>
         </span>
       }
-      className="min-h-[420px]"
+      className="min-h-[560px]"
     >
       <div className="p-2 h-full">
         <TradingViewWidget

@@ -54,6 +54,7 @@ export type FinnhubProfile = {
   name?: string;
   marketCapitalization?: number; // in millions
   ticker?: string;
+  logo?: string;
 };
 
 export function getQuote(symbol: string) {

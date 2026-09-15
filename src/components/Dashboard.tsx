@@ -48,6 +48,8 @@ export function Dashboard() {
     <main className="w-full flex-1 px-0 py-4 space-y-4">
       <TickersWidget />
 
+      <StockHeatmapWidget />
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch">
         <div className="relative h-full">
           <VolumeTable data={volume.data} />
@@ -90,9 +92,8 @@ export function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
         <EconomicCalendarWidget />
-        <StockHeatmapWidget />
         <TopStoriesWidget />
       </div>
     </main>

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getQuote, getDailyCandle, hasFinnhubKey } from "@/lib/finnhub";
+import { getQuote, getDailyCandle, getProfile, hasFinnhubKey } from "@/lib/finnhub";
 import { VOLUME_WATCHLIST } from "@/lib/universe";
 import { biggestVolume as mockVolume } from "@/lib/mockData";
 import type { Quote } from "@/lib/types";
@@ -14,9 +14,10 @@ export async function GET() {
   try {
     const results = await Promise.all(
       VOLUME_WATCHLIST.map(async (symbol) => {
-        const [quote, candle] = await Promise.all([
+        const [quote, candle, profile] = await Promise.all([
           getQuote(symbol),
           getDailyCandle(symbol, 5),
+          getProfile(symbol),
         ]);
         if (!quote) return null;
         const volume =
@@ -25,11 +26,12 @@ export async function GET() {
             : 0;
         const row: Quote & { volume: number } = {
           symbol,
-          name: symbol,
+          name: profile?.name || symbol,
           price: quote.c,
           change: quote.d,
           changePercent: quote.dp,
           volume,
+          logo: profile?.logo,
         };
         return row;
       })

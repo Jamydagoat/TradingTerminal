@@ -5,6 +5,7 @@ export type Quote = {
   change: number;
   changePercent: number;
   volume?: number;
+  logo?: string;
 };
 
 export type SectorData = {
@@ -18,6 +19,7 @@ export type MarketCapRow = {
   name: string;
   marketCapTrillions: number;
   price: number;
+  logo?: string;
 };
 
 export type SnapshotRow = {

@@ -1,5 +1,6 @@
 import type { Quote } from "@/lib/types";
 import { Panel, ChangeText } from "./Panel";
+import { Avatar } from "./Avatar";
 
 export function VolumeTable({ data }: { data: Quote[] }) {
   return (
@@ -18,7 +19,7 @@ export function VolumeTable({ data }: { data: Quote[] }) {
               <tr key={row.symbol} className="border-t border-border hover:bg-surface-2/50">
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
-                    <div className="h-7 w-7 rounded-full bg-surface-2 shrink-0" />
+                    <Avatar symbol={row.symbol} logo={row.logo} />
                     <div className="min-w-0">
                       <div className="font-semibold">{row.symbol}</div>
                       <div className="text-xs text-muted truncate">{row.name}</div>
