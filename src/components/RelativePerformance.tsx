@@ -7,6 +7,9 @@ import { TradingViewWidget } from "./TradingViewWidget";
  * SPY with the other three index ETFs overlaid. TradingView switches the
  * vertical axis to percentage as soon as comparison symbols are present,
  * which is exactly the relative-performance read we want.
+ *
+ * Locked to read-only: zooming inside the iframe desynchronises the
+ * comparison series, and there is nothing here worth panning to.
  */
 export function RelativePerformance() {
   return (
@@ -35,16 +38,20 @@ export function RelativePerformance() {
           style: "2",
           locale: "en",
           hide_top_toolbar: true,
-          hide_legend: false,
           hide_side_toolbar: true,
+          hide_volume: true,
+          hide_legend: false,
+          withdateranges: false,
           allow_symbol_change: false,
           save_image: false,
           details: false,
           calendar: false,
+          enable_publishing: false,
           backgroundColor: "rgba(20, 20, 22, 1)",
           gridColor: "rgba(38, 38, 42, 0.5)",
         }}
-        height={332}
+        height={360}
+        interactive={false}
         fallbackLabel="performance chart"
       />
     </Panel>

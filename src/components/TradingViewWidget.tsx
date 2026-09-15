@@ -12,11 +12,14 @@ export function TradingViewWidget({
   config,
   height,
   fallbackLabel = "widget",
+  interactive = true,
 }: {
   scriptSrc: string;
   config: Record<string, unknown>;
   height: number;
   fallbackLabel?: string;
+  /** false locks the widget: no zoom, pan, or scroll inside the iframe. */
+  interactive?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const configJson = JSON.stringify({ ...config, width: "100%", height });
@@ -49,7 +52,9 @@ export function TradingViewWidget({
 
   return (
     <div
-      className="tradingview-widget-container w-full overflow-hidden"
+      className={`tradingview-widget-container w-full overflow-hidden ${
+        interactive ? "" : "pointer-events-none select-none"
+      }`}
       style={{ height }}
       ref={ref}
     />
