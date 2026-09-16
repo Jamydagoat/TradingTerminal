@@ -40,7 +40,7 @@ const SYMBOL_GROUPS = [
   },
 ];
 
-export function MarketSnapshot() {
+export function MarketSnapshot({ height = 332 }: { height?: number }) {
   return (
     <Panel title="Market Snapshot" right={<StatusTag live />}>
       <TradingViewWidget
@@ -53,7 +53,7 @@ export function MarketSnapshot() {
           locale: "en",
           backgroundColor: "rgba(20, 20, 22, 1)",
         }}
-        height={332}
+        height={height}
         interactive={false}
         fallbackLabel="market snapshot"
       />

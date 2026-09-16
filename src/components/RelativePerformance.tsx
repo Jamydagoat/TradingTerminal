@@ -11,7 +11,7 @@ import { TradingViewWidget } from "./TradingViewWidget";
  * Locked to read-only: zooming inside the iframe desynchronises the
  * comparison series, and there is nothing here worth panning to.
  */
-export function RelativePerformance() {
+export function RelativePerformance({ height = 360 }: { height?: number }) {
   return (
     <Panel
       title="Relative Performance"
@@ -50,7 +50,7 @@ export function RelativePerformance() {
           backgroundColor: "rgba(20, 20, 22, 1)",
           gridColor: "rgba(38, 38, 42, 0.5)",
         }}
-        height={360}
+        height={height}
         interactive={false}
         fallbackLabel="performance chart"
       />

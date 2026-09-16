@@ -3,7 +3,7 @@
 import { Panel, StatusTag } from "./Panel";
 import { TradingViewWidget } from "./TradingViewWidget";
 
-export function StockHeatmapWidget() {
+export function StockHeatmapWidget({ height = 620 }: { height?: number }) {
   return (
     <Panel title="S&P 500 Heatmap" right={<StatusTag live />}>
       <TradingViewWidget
@@ -22,7 +22,7 @@ export function StockHeatmapWidget() {
           isZoomEnabled: true,
           isMonoSize: false,
         }}
-        height={620}
+        height={height}
         fallbackLabel="stock heatmap"
       />
     </Panel>

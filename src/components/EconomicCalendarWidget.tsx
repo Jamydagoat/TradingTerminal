@@ -3,7 +3,7 @@
 import { Panel, StatusTag } from "./Panel";
 import { TradingViewWidget } from "./TradingViewWidget";
 
-export function EconomicCalendarWidget() {
+export function EconomicCalendarWidget({ height = 392 }: { height?: number }) {
   return (
     <Panel title="Economic Calendar" right={<StatusTag live />}>
       {/*
@@ -26,7 +26,7 @@ export function EconomicCalendarWidget() {
           importanceFilter: "-1,0,1",
           countryFilter: "us,eu,gb,jp,ca",
         }}
-        height={392}
+        height={height}
         fallbackLabel="economic calendar"
       />
     </Panel>

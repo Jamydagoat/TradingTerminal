@@ -13,7 +13,7 @@ profile, fundamentals, and symbol news, with a back arrow and a Trade button
 
 - Next.js (App Router) + TypeScript
 - Tailwind CSS v4
-- Recharts, lucide-react
+- lucide-react
 - TradingView embed widgets (free, no API key)
 
 ## Live data
@@ -62,9 +62,51 @@ placeholder prose — a fabricated market brief is worse than no brief.
   chart is a TradingView comparison rather than a locally drawn series.
 - Fear & Greed is a computed proxy (market breadth + VIXY momentum); CNN's
   index has no public API.
-- Market Snapshot (international indices, yields) stays sample data.
+- Yields, volatility indices and international benchmarks are not on Finnhub's
+  free tier at all, so Market Snapshot carries real values via a TradingView
+  widget instead of ETF proxies. Exchange data there is delayed; forex is not.
 - The economic calendar is a cross-origin iframe, so its Actual/Forecast/Prior
   labels are an approximate strip rendered above the widget.
+
+## Access control (Google sign-in)
+
+The dashboard can be gated behind Google OAuth with an email allow-list. Auth is
+enforced in `src/proxy.ts` (Next 16 renamed the `middleware` convention to
+`proxy`), which covers the API routes too — so nobody outside the list can burn
+the Finnhub or Gemini quota by calling `/api/*` directly.
+
+1. Google Cloud Console → APIs & Services → Credentials → **Create OAuth client
+   ID** → *Web application*.
+2. Authorised redirect URIs — add both:
+   - `https://<your-worker>.workers.dev/api/auth/callback`
+   - `http://localhost:3000/api/auth/callback` (for local dev)
+3. Set these (Worker secrets in production):
+
+| Variable | Value |
+|---|---|
+| `GOOGLE_CLIENT_ID` | from the console |
+| `GOOGLE_CLIENT_SECRET` | from the console |
+| `AUTH_SECRET` | any long random string — signs the session cookie |
+| `AUTH_ALLOWED_EMAILS` | `you@gmail.com,mate@gmail.com` or `@yourdomain.com` |
+
+Three states, deliberately:
+- **All unset** — auth is off and the app is open. Convenient for local dev.
+- **All set** — enforced. Non-listed accounts are refused after signing in.
+- **Partially set** — returns a 500 naming the missing variables. This fails
+  closed on purpose: an owner who believes the dashboard is private should never
+  find it open because one variable failed to load.
+
+An empty `AUTH_ALLOWED_EMAILS` allows nobody, never everybody.
+
+Sessions are a signed, `HttpOnly`/`Secure`/`SameSite=Lax` cookie valid for seven
+days; sign out at `/api/auth/logout`.
+
+## Panel sizes
+
+Every panel on the dashboard can be dragged taller or shorter by its bottom
+edge, and sizes persist per browser. Double click a handle to reset that panel.
+Embedded TradingView widgets re-initialise on release rather than during the
+drag, since they bake their height in at load.
 
 ## Development
 
